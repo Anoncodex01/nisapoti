@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Wishlist Expiration Processor every hour
+Requires=wishlist-expiration.service
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

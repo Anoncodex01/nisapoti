@@ -1,0 +1,32 @@
+FROM node:18-alpine
+
+# Install cron
+RUN apk add --no-cache dcron
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy application files
+COPY . .
+
+# Create logs directory
+RUN mkdir -p logs
+
+# Copy cron script
+COPY scripts/process-expired-wishlists.js ./
+COPY lib/wishlist-expiration.ts ./
+
+# Make script executable
+RUN chmod +x process-expired-wishlists.js
+
+# Create cron job
+RUN echo "0 * * * * /usr/local/bin/node /app/process-expired-wishlists.js" > /etc/crontabs/root
+
+# Start cron
+CMD ["crond", "-f"]

@@ -1,0 +1,15 @@
+[Unit]
+Description=Wishlist Expiration Processor
+After=network.target
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/path/to/your/project
+ExecStart=/usr/bin/node scripts/process-expired-wishlists.js
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
