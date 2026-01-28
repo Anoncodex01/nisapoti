@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation';
 
 interface Creator {
   id: string;
+  user_id?: string;
   display_name: string;
+  username?: string;
   category: string;
   bio: string;
   avatar_url?: string;
@@ -119,8 +121,12 @@ export default function ExplorePage() {
     return category.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
   };
 
-  const handleViewPage = (creatorId: string) => {
-    router.push(`/creator/${creatorId}`);
+  const handleViewPage = (creator: Creator) => {
+    const creatorSlug = creator.username || creator.user_id || creator.id;
+    if (!creatorSlug) {
+      return;
+    }
+    router.push(`/${creatorSlug}`);
   };
 
   const handleLoadMore = () => {
@@ -277,7 +283,7 @@ export default function ExplorePage() {
                 <span className="font-semibold">{creator.supporter_count} supporters</span>
               </div>
               <button 
-                onClick={() => handleViewPage(creator.id)}
+                onClick={() => handleViewPage(creator)}
                 className="px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-[#FF6A1A] to-[#FF9A3C] rounded-xl hover:from-orange-500 hover:to-orange-300 transition-all duration-200 shadow-lg hover:shadow-xl group-hover:scale-105"
               >
                 View Page

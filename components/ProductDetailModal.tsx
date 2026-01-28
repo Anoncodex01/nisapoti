@@ -8,7 +8,7 @@ interface ProductDetailModalProps {
   product: Product | null;
   isOpen: boolean;
   onClose: () => void;
-  onAddToCart: (product: Product) => void;
+  onAddToCartAndCheckout: (product: Product, quantity: number) => void;
   getProductImage: (product: Product) => string;
 }
 
@@ -16,7 +16,7 @@ export default function ProductDetailModal({
   product,
   isOpen,
   onClose,
-  onAddToCart,
+  onAddToCartAndCheckout,
   getProductImage
 }: ProductDetailModalProps) {
   const [quantity, setQuantity] = useState(1);
@@ -30,14 +30,9 @@ export default function ProductDetailModal({
   const totalPrice = product.price * quantity;
 
   const handlePurchase = () => {
-    // Add to cart with quantity
-    for (let i = 0; i < quantity; i++) {
-      onAddToCart(product);
-    }
+    // Add to cart with quantity and go to checkout
+    onAddToCartAndCheckout(product, quantity);
     onClose();
-    
-    // Redirect to checkout page
-    window.location.href = '/checkout';
   };
 
   return (

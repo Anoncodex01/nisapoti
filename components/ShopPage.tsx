@@ -104,17 +104,47 @@ export default function ShopPage({ creatorName, creator, activeTab, setActiveTab
     product.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const addToCart = (product: Product) => {
+  const persistCart = (items: Product[], itemQuantities: { [key: string]: number }) => {
+    localStorage.setItem('cartItems', JSON.stringify(items));
+    localStorage.setItem('cartQuantities', JSON.stringify(itemQuantities));
+    localStorage.setItem('cartCreator', JSON.stringify({
+      user_id: creator.user_id,
+      username: creator.username,
+      display_name: creator.display_name
+    }));
+  };
+
+  const addToCartWithQuantity = (product: Product, quantity = 1) => {
     setCartItems(prev => {
-      // Check if product already exists in cart
       const existingItem = prev.find(item => item.id === product.id);
       if (existingItem) {
-        // Product already in cart, don't add duplicate
         return prev;
       }
-      // Add new product to cart
       return [...prev, product];
     });
+
+    setQuantities(prev => {
+      const allowQuantity = product.allow_quantity ?? false;
+      const currentQty = prev[product.id] ?? 0;
+      const nextQty = allowQuantity ? currentQty + quantity : 1;
+      return { ...prev, [product.id]: nextQty };
+    });
+  };
+
+  const addToCart = (product: Product) => {
+    addToCartWithQuantity(product, 1);
+  };
+
+  const addToCartAndCheckout = (product: Product, quantity = 1) => {
+    const allowQuantity = product.allow_quantity ?? false;
+    const existingItem = cartItems.find(item => item.id === product.id);
+    const nextItems = existingItem ? cartItems : [...cartItems, product];
+    const currentQty = quantities[product.id] ?? 0;
+    const nextQty = allowQuantity ? currentQty + quantity : 1;
+    const nextQuantities = { ...quantities, [product.id]: nextQty };
+
+    persistCart(nextItems, nextQuantities);
+    window.location.href = '/checkout';
   };
 
   const toggleFavorite = (productId: string) => {
@@ -146,13 +176,7 @@ export default function ShopPage({ creatorName, creator, activeTab, setActiveTab
   const openCheckout = () => {
     if (cartItems.length > 0) {
       // Save cart to localStorage and redirect to checkout page
-      localStorage.setItem('cartItems', JSON.stringify(cartItems));
-      localStorage.setItem('cartQuantities', JSON.stringify(quantities));
-      localStorage.setItem('cartCreator', JSON.stringify({
-        user_id: creator.user_id,
-        username: creator.username,
-        display_name: creator.display_name
-      }));
+      persistCart(cartItems, quantities);
       window.location.href = '/checkout';
     }
   };
@@ -369,7 +393,7 @@ export default function ShopPage({ creatorName, creator, activeTab, setActiveTab
           product={selectedProduct}
           isOpen={isDetailModalOpen}
           onClose={closeProductDetail}
-          onAddToCart={addToCart}
+          onAddToCartAndCheckout={addToCartAndCheckout}
           getProductImage={getProductImage}
         />
 

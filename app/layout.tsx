@@ -14,9 +14,40 @@ const playfair = Playfair_Display({
   variable: '--font-playfair',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://nisapoti.com';
+const siteTitle = 'Nisapoti - Support Your Favorite Creators Globally';
+const siteDescription =
+  'Empower creators across Tanzania to share their art, music, and content while earning support from their community.';
+const defaultOgImage = `${siteUrl}/logonis.png`;
+
 export const metadata: Metadata = {
-  title: 'Nisapoti - Support Your Favorite Creators Globally',
-  description: 'Empower creators across Tanzania to share their art, music, and content while earning support from their community.',
+  metadataBase: new URL(siteUrl),
+  title: siteTitle,
+  description: siteDescription,
+  icons: {
+    icon: '/logonis.png',
+    apple: '/logonis.png'
+  },
+  openGraph: {
+    type: 'website',
+    url: siteUrl,
+    title: siteTitle,
+    description: siteDescription,
+    images: [
+      {
+        url: defaultOgImage,
+        width: 1200,
+        height: 630,
+        alt: 'Nisapoti logo'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+    images: [defaultOgImage]
+  }
 };
 
 export default function RootLayout({
