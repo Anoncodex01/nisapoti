@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
+import { getUploadsDir } from '@/lib/uploads';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,7 +43,7 @@ export async function POST(request: NextRequest) {
     const filename = `avatar_${timestamp}_${randomString}.${fileExtension}`;
 
     // Create upload directory if it doesn't exist
-    const uploadDir = join(process.cwd(), 'public', 'uploads', 'avatars');
+    const uploadDir = getUploadsDir('avatars');
     if (!existsSync(uploadDir)) {
       await mkdir(uploadDir, { recursive: true });
     }
@@ -50,7 +51,7 @@ export async function POST(request: NextRequest) {
     // Save file
     const filePath = join(uploadDir, filename);
     const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const buffer = new Uint8Array(bytes);
     await writeFile(filePath, buffer);
 
     // Return the relative path for database storage

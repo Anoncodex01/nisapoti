@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
+import { getUploadsDir } from '@/lib/uploads';
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,7 +49,7 @@ export async function POST(request: NextRequest) {
       const filename = `wishlist_${timestamp}_${randomString}.${fileExtension}`;
 
       // Create upload directory if it doesn't exist
-      const uploadDir = join(process.cwd(), 'public', 'uploads', 'wishlist');
+      const uploadDir = getUploadsDir('wishlist');
       if (!existsSync(uploadDir)) {
         await mkdir(uploadDir, { recursive: true });
       }
@@ -56,7 +57,7 @@ export async function POST(request: NextRequest) {
       // Save file
       const filePath = join(uploadDir, filename);
       const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+      const buffer = new Uint8Array(bytes);
       await writeFile(filePath, buffer);
 
       // Store the relative path for database

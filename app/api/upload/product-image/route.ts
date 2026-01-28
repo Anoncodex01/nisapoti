@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { getUploadsDir } from '@/lib/uploads';
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create uploads directory if it doesn't exist
-    const uploadsDir = join(process.cwd(), 'public', 'uploads', 'products');
+    const uploadsDir = getUploadsDir('products');
     await mkdir(uploadsDir, { recursive: true });
 
     // Generate unique filename
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
 
     // Convert file to buffer and save
     const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    const buffer = new Uint8Array(bytes);
     await writeFile(filePath, buffer);
 
     // Return the public URL
