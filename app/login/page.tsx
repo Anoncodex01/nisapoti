@@ -66,7 +66,13 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
+        const errorMessage = data.error || 'Login failed';
+        if (errorMessage.toLowerCase().includes('verify your email')) {
+          sessionStorage.setItem('userEmail', formData.email);
+          router.push('/verify-email');
+          return;
+        }
+        throw new Error(errorMessage);
       }
 
       // Check if profile is complete and redirect accordingly

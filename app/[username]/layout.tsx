@@ -6,6 +6,9 @@ type LayoutProps = {
   params: { username: string };
 };
 
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
 const siteUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://nisapoti.com';
 const defaultOgImage = `${siteUrl}/logonis.png`;
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
+import { requireAuth } from '@/lib/api-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,15 +19,24 @@ export async function OPTIONS() {
 
 export async function GET(request: NextRequest) {
   try {
+    const auth = requireAuth(request);
+    if (!auth.ok) {
+      return addCorsHeaders(NextResponse.json({ error: auth.error }, { status: auth.status }));
+    }
+
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
     const limit = parseInt(searchParams.get('limit') || '20');
+    const period = searchParams.get('period') || '7 days';
 
     if (!userId) {
       return NextResponse.json(
         { error: 'User ID is required' },
         { status: 400 }
       );
+    }
+    if (userId !== auth.userId) {
+      return addCorsHeaders(NextResponse.json({ error: 'Forbidden' }, { status: 403 }));
     }
 
     // Get creator profile
@@ -44,6 +54,20 @@ export async function GET(request: NextRequest) {
 
     const creatorId = profile.user_id;
 
+    // Build date filter based on period
+    let dateFilter = '';
+    switch (period) {
+      case '7 days':
+        dateFilter = "AND created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+        break;
+      case '30 days':
+        dateFilter = "AND created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)";
+        break;
+      case 'All time':
+        dateFilter = '';
+        break;
+    }
+
     // Fetch recent supporters (exclude wishlist supports - they're handled separately)
     const supportersQuery = `
       SELECT 
@@ -58,7 +82,7 @@ export async function GET(request: NextRequest) {
         NULL as wishlist_name,
         NULL as wishlist_id
       FROM supporters 
-      WHERE creator_id = ? AND status = 'completed' AND (type != 'wishlist' OR type IS NULL)
+      WHERE creator_id = ? AND status = 'completed' AND (type != 'wishlist' OR type IS NULL) ${dateFilter}
       ORDER BY created_at DESC
       LIMIT ?
     `;
@@ -78,7 +102,7 @@ export async function GET(request: NextRequest) {
         NULL as wishlist_id
       FROM orders o
       JOIN products p ON o.product_id = p.id
-      WHERE o.creator_id = ? AND o.payment_status = 'paid'
+      WHERE o.creator_id = ? AND o.payment_status = 'paid' ${dateFilter.replace('created_at', 'o.order_date')}
       ORDER BY o.order_date DESC
       LIMIT ?
     `;
@@ -98,7 +122,7 @@ export async function GET(request: NextRequest) {
         w.id as wishlist_id
       FROM supporters s
       LEFT JOIN wishlist w ON s.wishlist_id = w.id
-      WHERE s.creator_id = ? AND s.status = 'completed' AND s.type = 'wishlist'
+      WHERE s.creator_id = ? AND s.status = 'completed' AND s.type = 'wishlist' ${dateFilter}
       ORDER BY s.created_at DESC
       LIMIT ?
     `;
@@ -123,7 +147,8 @@ export async function GET(request: NextRequest) {
     const response = NextResponse.json({
       success: true,
       activities: recentActivities,
-      total: allActivities.length
+      total: allActivities.length,
+      period,
     });
     
     return addCorsHeaders(response);

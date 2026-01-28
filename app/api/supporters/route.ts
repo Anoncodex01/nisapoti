@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
+import { requireAuth } from '@/lib/api-auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
+    const auth = requireAuth(request);
+    if (!auth.ok) {
+      return NextResponse.json({ error: auth.error }, { status: auth.status });
+    }
+
     const { searchParams } = new URL(request.url);
     const creatorId = searchParams.get('creator_id');
     const limit = parseInt(searchParams.get('limit') || '20');
@@ -15,6 +21,9 @@ export async function GET(request: NextRequest) {
         { error: 'Creator ID is required' },
         { status: 400 }
       );
+    }
+    if (creatorId !== auth.userId) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     // Fetch supporters with pagination (include all supporters including wishlist)
