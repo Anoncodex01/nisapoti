@@ -218,7 +218,7 @@ export default function CheckoutPage({
                   required
                 />
                 <p className="text-sm text-gray-500 mt-1">
-                  We'll send you a mobile money payment request
+                  We&apos;ll send you a mobile money payment request
                 </p>
               </div>
 
@@ -257,7 +257,7 @@ export default function CheckoutPage({
                   </div>
                 </div>
                 <p className="text-sm text-gray-500 mt-2 text-center">
-                  We'll automatically detect your provider based on your phone number
+                  We&apos;ll automatically detect your provider based on your phone number
                 </p>
               </div>
 

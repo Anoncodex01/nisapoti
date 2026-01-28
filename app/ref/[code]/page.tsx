@@ -186,10 +186,10 @@ export default function ReferralLandingPage() {
         {referrerInfo && (
           <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-8 text-white text-center">
             <h3 className="text-2xl font-bold mb-4">
-              Thanks for joining through {referrerInfo.username}'s referral!
+              Thanks for joining through {referrerInfo.username}&apos;s referral!
             </h3>
             <p className="text-orange-100 mb-6">
-              You'll both earn rewards when you start supporting creators on the platform.
+              You&apos;ll both earn rewards when you start supporting creators on the platform.
             </p>
             <div className="flex items-center justify-center space-x-2">
               <TrendingUp className="w-5 h-5" />

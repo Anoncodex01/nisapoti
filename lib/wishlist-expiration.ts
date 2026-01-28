@@ -152,7 +152,7 @@ export async function getExpiringWishlists(creatorId?: string): Promise<any[]> {
         AND w.amount_funded < w.price
     `;
     
-    const params = [sevenDaysFromNow];
+    const params: (Date | string)[] = [sevenDaysFromNow];
     
     if (creatorId) {
       query += ' AND w.creator_id = ?';

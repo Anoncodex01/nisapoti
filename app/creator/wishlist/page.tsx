@@ -256,7 +256,8 @@ export default function WishlistPage() {
             description: '',
             link: '',
             is_priority: false,
-            hashtags: ''
+            hashtags: '',
+            duration_days: 30
           });
           setSelectedHashtags([]);
           setShowHashtagSection(false);
@@ -303,6 +304,7 @@ export default function WishlistPage() {
 
   const handleEditItem = (item: WishlistItem) => {
     setEditingItem(item);
+    const itemWithDuration = item as WishlistItem & { duration_days?: number };
     setNewItem({
       name: item.name,
       category: item.category,
@@ -310,7 +312,8 @@ export default function WishlistPage() {
       description: item.description,
       link: item.link || '',
       is_priority: item.is_priority,
-      hashtags: item.hashtags
+      hashtags: item.hashtags,
+      duration_days: itemWithDuration.duration_days ?? 30
     });
     setSelectedHashtags(item.hashtags ? item.hashtags.split(',').map(tag => tag.trim()) : []);
     setShowHashtagSection(!!item.category && !!hashtags[item.category as keyof typeof hashtags]);
@@ -383,7 +386,8 @@ export default function WishlistPage() {
             description: '',
             link: '',
             is_priority: false,
-            hashtags: ''
+            hashtags: '',
+            duration_days: 30
           });
           setSelectedHashtags([]);
           setShowHashtagSection(false);

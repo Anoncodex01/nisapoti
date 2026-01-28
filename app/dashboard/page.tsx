@@ -525,7 +525,7 @@ export default function DashboardPage() {
               <Clock className="w-8 h-8 text-gray-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Coming Soon</h3>
-            <p className="text-gray-600">We're working on something awesome!</p>
+            <p className="text-gray-600">We&apos;re working on something awesome!</p>
           </div>
         </div>
 

@@ -80,8 +80,8 @@ export async function POST(request: NextRequest) {
     });
 
     // Generate download links and attachments
-    const downloadLinks = [];
-    const attachments = [];
+    const downloadLinks: Array<{ type: string; title: string; url: string; description: string }> = [];
+    const attachments: Array<{ filename: string; content: Buffer | string }> = [];
 
     // Handle downloadable files
     if (product.file_url && product.file_url !== '' && product.file_url !== 'null') {

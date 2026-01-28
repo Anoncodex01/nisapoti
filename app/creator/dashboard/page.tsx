@@ -681,7 +681,7 @@ export default function DashboardPage() {
                 <Activity className="w-8 h-8 text-orange-600" />
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-2">No activity yet</h4>
-              <p className="text-gray-600 mb-4">Once you start receiving support, sales, or wishlist contributions, they'll appear here. This includes both recent and historical activity.</p>
+              <p className="text-gray-600 mb-4">Once you start receiving support, sales, or wishlist contributions, they&apos;ll appear here. This includes both recent and historical activity.</p>
               <div className="flex space-x-4 justify-center">
             <button 
                   onClick={() => window.location.href = '/creator/shop'}

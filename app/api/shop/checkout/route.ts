@@ -184,11 +184,12 @@ export async function POST(request: NextRequest) {
       status: paymentResult.data.status,
     });
 
+    const orderId = orderResult.data ? (orderResult.data as { insertId?: number }).insertId : undefined;
     return NextResponse.json({
       success: true,
       deposit_id: depositId,
       order_number: orderNumber,
-      order_id: orderResult.insertId,
+      order_id: orderId,
       payment_reference: paymentResult.data.reference,
       external_reference: paymentResult.data.external_reference,
       status: paymentResult.data.status,

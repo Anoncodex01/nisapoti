@@ -147,7 +147,7 @@ export default function SupportSection({ creator }: SupportSectionProps) {
             required
           />
           <p className="text-sm text-gray-500 mt-1">
-            We'll send you a mobile money payment request
+            We&apos;ll send you a mobile money payment request
           </p>
         </div>
       </div>
@@ -187,7 +187,7 @@ export default function SupportSection({ creator }: SupportSectionProps) {
           </div>
         </div>
         <p className="text-xs text-gray-500 mt-2 text-center">
-          We'll automatically detect your provider
+          We&apos;ll automatically detect your provider
         </p>
       </div>
 

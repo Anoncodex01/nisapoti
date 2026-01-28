@@ -448,7 +448,7 @@ export default function ThankYouPage() {
           </p>
           <div className="bg-white rounded-lg p-4 shadow-sm">
             <p className="text-sm text-gray-500">
-              We're waiting for your payment to be confirmed. This page will update automatically once payment is completed.
+              We&apos;re waiting for your payment to be confirmed. This page will update automatically once payment is completed.
             </p>
           </div>
         </div>
@@ -476,14 +476,14 @@ export default function ThankYouPage() {
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-4">Session Expired</h1>
           <p className="text-gray-600 mb-6">
-            This thank you page has expired. Don't worry - your payment was successful and you should have received a confirmation email with your purchase details.
+            This thank you page has expired. Don&apos;t worry - your payment was successful and you should have received a confirmation email with your purchase details.
           </p>
           <div className="space-y-3">
             <a 
               href={`/${creator.username}?tab=shop`}
               className="block w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors"
             >
-              Visit {creator.display_name}'s Shop
+              Visit {creator.display_name}&apos;s Shop
             </a>
             <a 
               href="/"
@@ -512,7 +512,7 @@ export default function ThankYouPage() {
             <div className="w-8 h-8 text-red-500 text-2xl">⚠️</div>
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Purchase Not Found</h1>
-          <p className="text-gray-600 mb-6">We couldn't find your purchase details.</p>
+          <p className="text-gray-600 mb-6">We couldn&apos;t find your purchase details.</p>
           <button
             onClick={() => window.location.href = '/Alvin'}
             className="px-6 py-3 bg-orange-500 text-white rounded-xl font-medium hover:bg-orange-600 transition-colors"

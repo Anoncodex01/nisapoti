@@ -223,10 +223,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Fetch the created order
+    // Fetch the created order (db.query for INSERT returns ResultSetHeader with insertId)
+    const insertId = (result as unknown as { insertId?: number }).insertId;
     const [order] = await db.query(
       'SELECT * FROM orders WHERE id = ?',
-      [result.insertId]
+      [insertId]
     );
 
     return NextResponse.json({

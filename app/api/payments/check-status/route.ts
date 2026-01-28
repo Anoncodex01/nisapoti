@@ -246,9 +246,10 @@ export async function GET(request: NextRequest) {
 
         // If payment failed, update database with failure reason
         if (paymentData.status === 'failed') {
-          const failureReason = paymentData.failure_reason || 
-                               paymentData.error || 
-                               paymentData.channel?.error ||
+          const data = paymentData as typeof paymentData & { failure_reason?: string; error?: string; channel?: { error?: string } };
+          const failureReason = data.failure_reason ||
+                               data.error ||
+                               data.channel?.error ||
                                'Payment failed';
           
           console.error('❌ Payment failed - updating database:', {

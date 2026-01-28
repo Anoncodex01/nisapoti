@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
           buyerEmail: order.buyer_email,
           productTitle: order.product_title,
           emailSent: false,
-          emailError: error.message
+          emailError: error instanceof Error ? error.message : 'Unknown error'
         });
       }
     }
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Send emails for orders error:', error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

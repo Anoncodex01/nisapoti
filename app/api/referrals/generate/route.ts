@@ -52,7 +52,10 @@ export async function POST(request: NextRequest) {
       [userId, referralCode, type, 10.00]
     );
 
-    const referralCodeId = result.insertId;
+    if (!result.success || !result.data) {
+      return NextResponse.json({ error: 'Failed to create referral code' }, { status: 500 });
+    }
+    const referralCodeId = (result.data as { insertId?: number }).insertId;
 
     return NextResponse.json({
       success: true,

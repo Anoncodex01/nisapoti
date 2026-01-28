@@ -573,14 +573,14 @@ export default function ProfilePage() {
             {/* Modal Header */}
             <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-t-3xl p-6 text-center">
               <div className="text-6xl mb-4">😢</div>
-              <h3 className="text-2xl font-bold text-white">We'll Miss You!</h3>
+              <h3 className="text-2xl font-bold text-white">We&apos;ll Miss You!</h3>
             </div>
 
             {/* Modal Body */}
             <div className="p-8">
               <div className="text-center mb-6">
                 <p className="text-lg text-gray-700 mb-4">
-                  We're sad to see you go! Before you disable your account, please let us know why you're leaving.
+                  We&apos;re sad to see you go! Before you disable your account, please let us know why you&apos;re leaving.
                 </p>
                 <p className="text-sm text-gray-600">
                   Your feedback helps us improve Nisapoti for everyone.
@@ -612,7 +612,7 @@ export default function ProfilePage() {
                   <div>
                     <h4 className="text-sm font-semibold text-blue-800 mb-1">Need Help Instead?</h4>
                     <p className="text-sm text-blue-700 mb-2">
-                      If you're having issues, our support team is here to help!
+                      If you&apos;re having issues, our support team is here to help!
                     </p>
                     <a 
                       href="mailto:support@nisapoti.com" 

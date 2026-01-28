@@ -27,7 +27,7 @@ fi
 
 export NISAPOTI_SSH_PASS
 
-# Clone if missing, then run server deploy script
+# Clone if missing, else pull; then run server deploy script
 RUN="
   set -e;
   if [ ! -d $APP_DIR/.git ]; then
@@ -35,12 +35,15 @@ RUN="
     sudo mkdir -p /var/www;
     sudo git clone https://github.com/Anoncodex01/nisapoti.git $APP_DIR;
     sudo chown -R \$(whoami):\$(whoami) $APP_DIR;
+  else
+    echo 'Pulling latest from GitHub...';
+    (cd $APP_DIR && git fetch origin && git reset --hard origin/main);
   fi;
   cd $APP_DIR && bash $SCRIPT deploy;
 "
 
 if command -v sshpass &>/dev/null; then
-  sshpass -p "$NISAPOTI_SSH_PASS" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=15 -T "$USER@$HOST" "$RUN"
+  sshpass -p "$NISAPOTI_SSH_PASS" ssh -o StrictHostKeyChecking=no -o ConnectTimeout=15 -o RequestTTY=no "$USER@$HOST" "$RUN"
 else
   echo "Install sshpass (e.g. brew install sshpass) or run manually:"
   echo "  ssh $USER@$HOST"

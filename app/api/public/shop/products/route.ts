@@ -85,12 +85,13 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error fetching public products:', error);
-    console.error('Error details:', error.message);
+    console.error('Error details:', message);
     return NextResponse.json({ 
       success: false, 
       error: 'Failed to fetch products',
-      details: error.message 
+      details: message 
     }, { status: 500 });
   }
 }

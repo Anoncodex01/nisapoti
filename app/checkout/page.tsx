@@ -484,7 +484,7 @@ export default function CheckoutPage() {
           {/* Checkout Section */}
           <div className="bg-white rounded-2xl shadow-xl p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Checkout</h2>
-            <p className="text-gray-600 mb-6">You'll be charged {formatPrice(totalWithTax)}</p>
+            <p className="text-gray-600 mb-6">You&apos;ll be charged {formatPrice(totalWithTax)}</p>
             
             {/* Cart Items */}
             <div className="space-y-4 mb-6">
@@ -624,7 +624,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                   <p className="text-xs text-gray-500 mt-1">
-                    We'll send your purchase confirmation and download links to this email
+                    We&apos;ll send your purchase confirmation and download links to this email
                   </p>
                 </div>
               </div>

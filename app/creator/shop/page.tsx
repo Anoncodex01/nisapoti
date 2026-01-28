@@ -34,15 +34,18 @@ interface Order {
 interface Product {
   id: string;
   title: string;
+  description?: string;
   category: string;
   price: number;
   status: 'active' | 'inactive' | 'draft';
   sales: number;
   createdAt: string;
   feature_image_url?: string;
+  file_url?: string;
   limit_slots: boolean;
   max_slots?: number;
   sold_slots: number;
+  allow_quantity?: boolean;
 }
 
 export default function ShopPage() {
@@ -356,6 +359,7 @@ export default function ShopPage() {
       }
 
       const productData = {
+        ...(editingProduct ? { id: editingProduct.id } : {}),
         title: productForm.name,
         description: productForm.description,
         price: parseFloat(productForm.price),
@@ -377,11 +381,6 @@ export default function ShopPage() {
         : '/api/shop/products/simplified';
       
       const method = editingProduct ? 'PUT' : 'POST';
-      
-      // Add ID for edit
-      if (editingProduct) {
-        productData.id = editingProduct.id;
-      }
 
       const response = await fetch(url, {
         method,
@@ -506,7 +505,7 @@ export default function ShopPage() {
       
       // Combine headers and rows
       const csvContent = [csvHeaders, ...csvRows]
-        .map(row => row.map(field => `"${field}"`).join(','))
+        .map(row => row.map((field: string | number) => `"${field}"`).join(','))
         .join('\n');
       
       // Create and download file
@@ -569,7 +568,7 @@ export default function ShopPage() {
       
       // Combine headers and rows
       const csvContent = [csvHeaders, ...csvRows]
-        .map(row => row.map(field => `"${field}"`).join(','))
+        .map(row => row.map((field: string | number) => `"${field}"`).join(','))
         .join('\n');
       
       // Create and download file
@@ -821,7 +820,7 @@ export default function ShopPage() {
                     {/* Page numbers */}
                     <div className="flex space-x-1">
                       {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                        let pageNum;
+                        let pageNum: number;
                         if (totalPages <= 5) {
                           pageNum = i + 1;
                         } else if (currentPage <= 3) {
@@ -1220,7 +1219,7 @@ export default function ShopPage() {
                       required
                     />
                     <span className="ml-2 text-sm text-gray-700">
-                      I created this and it doesn't contain any illegal, adult, copyrighted or{' '}
+                      I created this and it doesn&apos;t contain any illegal, adult, copyrighted or{' '}
                       <span className="underline">prohibited content</span>.
                     </span>
                   </label>

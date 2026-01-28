@@ -161,10 +161,11 @@ export async function POST(request: NextRequest) {
       ]
     );
 
-    // Fetch the created product
+    // Fetch the created product (db.query for INSERT returns ResultSetHeader with insertId)
+    const insertId = (result as unknown as { insertId?: number }).insertId;
     const [product] = await db.query(
       'SELECT * FROM products WHERE id = ?',
-      [result.insertId]
+      [insertId]
     );
 
     return NextResponse.json({

@@ -125,7 +125,7 @@ export default function SupportThankYouPage() {
       return Math.random() * (max - min) + min;
     };
 
-    const confettiInterval = setInterval(() => {
+    const confettiInterval: ReturnType<typeof setInterval> = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
@@ -247,7 +247,7 @@ export default function SupportThankYouPage() {
               <CheckCircle className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              You're Amazing! 🎉
+              You&apos;re Amazing! 🎉
             </h1>
             <p className="text-lg text-gray-600">
               You just supported <strong>{paymentData.creatorUsername}</strong>

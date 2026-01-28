@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
         const createdAt = new Date(wishlist.created_at);
         const now = new Date();
-        const daysSinceCreation = Math.floor((now - createdAt) / (1000 * 60 * 60 * 24));
+        const daysSinceCreation = Math.floor((now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24));
         
         let durationDays = 30;
         let expiresAt = new Date(createdAt);

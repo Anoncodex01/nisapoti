@@ -358,7 +358,7 @@ export default function HelpPage() {
             <div className="mb-6">
               <nav className="text-sm text-gray-500 mb-4">
                 <Link href="/help" className="hover:text-orange-500">All Collections</Link>
-                <span className="mx-2">></span>
+                <span className="mx-2">&gt;</span>
                 <button 
                   onClick={() => {
                     setSelectedArticle(null);
@@ -368,7 +368,7 @@ export default function HelpPage() {
                 >
                   {selectedCategoryData?.title}
                 </button>
-                <span className="mx-2">></span>
+                <span className="mx-2">&gt;</span>
                 <span>{selectedArticle.title}</span>
               </nav>
               <h1 className="text-3xl font-bold text-gray-900 mb-4">
@@ -441,7 +441,7 @@ export default function HelpPage() {
               <button onClick={() => setSelectedCategory(null)} className="hover:text-orange-500">
                 All Collections
               </button>
-              <span className="mx-2">></span>
+              <span className="mx-2">&gt;</span>
               <span>{selectedCategoryData.title}</span>
             </nav>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">

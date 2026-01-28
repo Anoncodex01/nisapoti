@@ -143,7 +143,7 @@ export default function WithdrawalModal({
                         </span>
                       </div>
                       <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                        <span className="text-sm font-medium text-gray-900">You'll receive</span>
+                        <span className="text-sm font-medium text-gray-900">You&apos;ll receive</span>
                         <span className="text-base font-bold text-gray-900">
                           {new Intl.NumberFormat('en-TZ', {
                             style: 'currency',

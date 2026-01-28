@@ -99,7 +99,7 @@ export default function WishlistPage({
           {/* Header */}
           <div className="p-8 border-b border-gray-100">
             <div className="text-center">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{creator.display_name}'s Wishlist</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">{creator.display_name}&apos;s Wishlist</h1>
               <p className="text-gray-600">Help make their dreams come true</p>
             </div>
           </div>
