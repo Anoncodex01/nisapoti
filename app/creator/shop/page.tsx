@@ -102,15 +102,12 @@ export default function ShopPage() {
     const fetchShopData = async () => {
       try {
         setLoading(true);
-        console.log('Fetching shop data...');
-        
         // Fetch products
         const productsResponse = await fetch('/api/shop/products/simplified');
         if (productsResponse.ok) {
           const productsData = await productsResponse.json();
           if (productsData.success) {
             setProducts(productsData.data.products);
-            console.log('Products loaded:', productsData.data.products.length);
             
             // Update products count in stats
             setStats(prevStats => ({
@@ -137,7 +134,6 @@ export default function ShopPage() {
               avatar: order.buyer_name.charAt(0).toUpperCase()
             }));
             setOrders(transformedOrders);
-            console.log('Orders loaded:', transformedOrders.length);
             
             // Update pagination info
             setPaginationInfo({

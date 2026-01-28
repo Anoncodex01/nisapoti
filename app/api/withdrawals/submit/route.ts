@@ -29,6 +29,8 @@ async function getUserFromToken(request: NextRequest) {
   }
 }
 
+const MIN_WITHDRAW_AMOUNT = 50000; // TZS
+
 export async function POST(request: NextRequest) {
   try {
     // Verify authentication
@@ -68,7 +70,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate minimum withdrawal amount (removed for testing - allow any amount > 0)
+    // Validate minimum withdrawal amount
     if (parseFloat(amount) <= 0) {
       return NextResponse.json(
         { error: 'Withdrawal amount must be greater than 0' },
@@ -116,7 +118,14 @@ export async function POST(request: NextRequest) {
     const availableBalance = parseFloat(availableBalanceResult?.available_balance || '0');
 
     const withdrawalAmount = parseFloat(amount);
-    
+
+    if (withdrawalAmount < MIN_WITHDRAW_AMOUNT) {
+      return NextResponse.json(
+        { error: `Minimum withdrawal amount is TZS ${MIN_WITHDRAW_AMOUNT.toLocaleString()}` },
+        { status: 400 }
+      );
+    }
+
     if (withdrawalAmount > availableBalance) {
       return NextResponse.json(
         { error: 'Insufficient balance' },

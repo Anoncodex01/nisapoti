@@ -55,8 +55,6 @@ export default function LoginPage() {
     
     // Login with new JWT-based authentication
     try {
-      console.log('Login attempt:', formData);
-      
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -70,8 +68,6 @@ export default function LoginPage() {
       if (!response.ok) {
         throw new Error(data.error || 'Login failed');
       }
-
-      console.log('Login successful:', data);
 
       // Check if profile is complete and redirect accordingly
       if (data.user?.profile_complete) {

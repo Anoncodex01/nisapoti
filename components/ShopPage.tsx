@@ -81,7 +81,6 @@ export default function ShopPage({ creatorName, creator, activeTab, setActiveTab
             }));
             
             setProducts(transformedProducts);
-            console.log('Products loaded for shop:', transformedProducts.length);
           } else {
             setError('Failed to load products');
           }

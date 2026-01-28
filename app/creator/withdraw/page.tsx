@@ -26,6 +26,7 @@ interface BalanceData {
 }
 
 export default function WithdrawPage() {
+  const MIN_WITHDRAW_AMOUNT = 50000
   const [user, setUser] = useState<any>(null)
   const [balanceData, setBalanceData] = useState<BalanceData>({
     available_balance: 0,
@@ -42,6 +43,7 @@ export default function WithdrawPage() {
   const [successMessage, setSuccessMessage] = useState<string>('')
   const [successTitle, setSuccessTitle] = useState<string>('')
   const [verifiedPaymentInfo, setVerifiedPaymentInfo] = useState<any>(null)
+  const [infoModalType, setInfoModalType] = useState<null | 'payment' | 'min'>(null)
 
   // Check authentication
   useEffect(() => {
@@ -199,6 +201,20 @@ export default function WithdrawPage() {
     }).format(amount)
   }
 
+  const handleOpenWithdraw = () => {
+    if (!verifiedPaymentInfo) {
+      setInfoModalType('payment')
+      return
+    }
+
+    if (balanceData.available_balance < MIN_WITHDRAW_AMOUNT) {
+      setInfoModalType('min')
+      return
+    }
+
+    setShowModal(true)
+  }
+
   const getStatusBadge = (status: string) => {
     const baseClasses = "px-3 py-1 rounded-full text-xs font-medium"
     switch (status) {
@@ -261,10 +277,18 @@ export default function WithdrawPage() {
               <h2 className="text-gray-500 text-sm font-medium">AVAILABLE BALANCE</h2>
             </div>
             <button
-              onClick={() => setShowModal(true)}
+              onClick={handleOpenWithdraw}
               disabled={balanceData.available_balance <= 0}
               className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:from-gray-300 disabled:to-gray-400 text-white px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 relative group"
-              title={balanceData.available_balance <= 0 ? "Insufficient balance" : ""}
+              title={
+                balanceData.available_balance <= 0
+                  ? 'Insufficient balance'
+                  : balanceData.available_balance < MIN_WITHDRAW_AMOUNT
+                  ? `Minimum withdrawal amount is TZS ${MIN_WITHDRAW_AMOUNT.toLocaleString()}`
+                  : !verifiedPaymentInfo
+                  ? 'Add a payment method before withdrawing'
+                  : ''
+              }
             >
               Withdraw
             </button>
@@ -403,6 +427,61 @@ export default function WithdrawPage() {
           message={successMessage}
           title={successTitle}
         />
+      )}
+
+      {/* Info modal for missing payment method / minimum amount */}
+      {infoModalType && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl w-full max-w-md relative">
+            <button
+              onClick={() => setInfoModalType(null)}
+              className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <div className="p-8 text-center">
+              <h2 className="text-2xl font-bold mb-4">
+                {infoModalType === 'payment' ? 'Add payment method' : 'Minimum balance required'}
+              </h2>
+              <p className="text-gray-600 mb-6">
+                {infoModalType === 'payment'
+                  ? 'Before you can withdraw, please add and verify your payout details on the Payment Info page.'
+                  : `You need at least TZS ${MIN_WITHDRAW_AMOUNT.toLocaleString()} available before you can request a withdrawal.`}
+              </p>
+
+              {infoModalType === 'payment' ? (
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={() => setInfoModalType(null)}
+                    className="w-full sm:w-1/2 border border-gray-300 text-gray-700 py-3 rounded-full font-medium hover:bg-gray-50 transition-all duration-200"
+                  >
+                    Close
+                  </button>
+                  <button
+                    onClick={() => {
+                      window.location.href = '/creator/payment-info'
+                    }}
+                    className="w-full sm:w-1/2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 rounded-full font-medium transition-all duration-200"
+                  >
+                    Go to Payment Info
+                  </button>
+                </div>
+              ) : (
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => setInfoModalType(null)}
+                    className="w-full max-w-[220px] border border-gray-300 text-gray-700 py-3 rounded-full font-medium hover:bg-gray-50 transition-all duration-200"
+                  >
+                    Close
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

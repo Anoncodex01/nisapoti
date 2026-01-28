@@ -101,7 +101,8 @@ export default function ReferralsPage() {
         const data = await response.json();
         if (data.success) {
           setReferralLink(data.data.referralLink);
-          setTotalInvites(data.data.stats.total_invites || 0);
+          // Count only completed registrations (conversions) as invites
+          setTotalInvites(data.data.stats.total_conversions || 0);
         } else {
           throw new Error('Failed to get referral data');
         }
