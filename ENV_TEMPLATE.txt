@@ -1,0 +1,39 @@
+# Nisapoti — copy to .env and fill in values
+# Database
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=nisapoti_nis
+
+# JWT
+JWT_SECRET=
+
+# App URL (used in emails, links, Snippe webhook)
+NEXT_PUBLIC_BASE_URL=https://your-domain.com
+
+# SMTP / Mail (creator notifications, purchase emails)
+SMTP_HOST=mail.nisapoti.com
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=no-reply@nisapoti.com
+SMTP_PASS=
+SMTP_FROM=no-reply@nisapoti.com
+MAIL_HOST=mail.nisapoti.com
+MAIL_PORT=465
+MAIL_USERNAME=no-reply@nisapoti.com
+MAIL_PASSWORD=
+MAIL_FROM_NAME=Nisapoti
+MAIL_FROM_ADDRESS=no-reply@nisapoti.com
+
+# Snippe (payments, withdrawals)
+SNIPPE_API_KEY=
+SNIPPE_BASE_URL=https://api.snippe.sh
+SNIPPE_WEBHOOK_URL=https://your-domain.com/api/payments/snippe-webhook
+
+# SMS (Mambo — withdrawal notifications)
+SMS_BASE_URL=https://mambosms.co.tz
+SMS_API_KEY=
+SMS_SENDER_ID=Nisapoti
+SMS_PHONE_NUMBER=
+SMS_PASSWORD=
