@@ -61,6 +61,34 @@ App runs on **port 3000** (`http://0.0.0.0:3000`). Put Nginx (or another reverse
 
 ---
 
+## Nginx + SSL (nisapoti.com)
+
+If **nisapoti.com** does not load or SSL is missing, run this **on the server** once:
+
+```bash
+ssh root@91.99.50.186
+cd /var/www/nisapoti
+sudo bash scripts/setup-nginx-ssl.sh
+```
+
+That script installs Nginx, configures it to proxy to port 3000, and obtains a Let's Encrypt certificate for `nisapoti.com`. Ensure DNS for `nisapoti.com` points to `91.99.50.186` before running.
+
+**Check from your machine:**
+
+```bash
+# DNS
+host nisapoti.com
+
+# HTTP (should redirect to HTTPS after SSL is set up)
+curl -sI http://nisapoti.com
+
+# HTTPS and SSL cert
+curl -sI https://nisapoti.com
+echo | openssl s_client -connect nisapoti.com:443 -servername nisapoti.com 2>/dev/null | openssl x509 -noout -subject -issuer -dates
+```
+
+---
+
 ## Env vars (summary)
 
 - **DB\_*** — MySQL (required)
