@@ -1,5 +1,5 @@
 #!/bin/bash
-# Nisapoti server deploy script — run ON the server (91.99.50.186)
+# Nisapoti server deploy script — run ON the server (165.232.82.188)
 # Usage: bash scripts/server-deploy.sh [install|deploy]
 
 set -e

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Deploy Nisapoti to server 91.99.50.186
+# Deploy Nisapoti to server 165.232.82.188
 # Run from project root. Uses sshpass for password auth.
 #
 # Usage:
@@ -8,14 +8,14 @@
 
 set -e
 
-HOST="91.99.50.186"
+HOST="165.232.82.188"
 USER="root"
 APP_DIR="/var/www/nisapoti"
 SCRIPT="scripts/server-deploy.sh"
 
 if [ -z "${NISAPOTI_SSH_PASS}" ]; then
   echo "Set NISAPOTI_SSH_PASS and re-run, or enter password when prompted."
-  echo "Example: NISAPOTI_SSH_PASS='Nisapoti@2026' ./deploy.sh"
+  echo "Example: NISAPOTI_SSH_PASS='NisapoTi@2026i' ./deploy.sh"
   read -r -s -p "SSH password: " NISAPOTI_SSH_PASS
   echo
 fi

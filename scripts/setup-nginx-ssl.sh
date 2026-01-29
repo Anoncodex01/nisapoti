@@ -1,7 +1,7 @@
 #!/bin/bash
-# Run ON the server (root@91.99.50.186) to install Nginx + SSL for nisapoti.com
+# Run ON the server (root@165.232.82.188) to install Nginx + SSL for nisapoti.com
 # Usage: sudo bash scripts/setup-nginx-ssl.sh
-# Prereq: DNS for nisapoti.com must point to this server (91.99.50.186)
+# Prereq: DNS for nisapoti.com must point to this server (165.232.82.188)
 
 set -e
 

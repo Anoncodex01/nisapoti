@@ -1,4 +1,4 @@
-# Nisapoti deployment (91.99.50.186)
+# Nisapoti deployment (165.232.82.188)
 
 ## Quick deploy from your Mac
 
@@ -9,13 +9,13 @@
 
 2. Run deploy (use your SSH password when prompted or via env):
    ```bash
-   NISAPOTI_SSH_PASS='Nisapoti@2026' ./deploy.sh
+   NISAPOTI_SSH_PASS='NisapoTi@2026i' ./deploy.sh
    ```
    Or: `./deploy.sh` and enter the password when prompted.
 
 3. **First deploy only:** The script will create `.env` from `ENV_TEMPLATE.txt` and exit. SSH in, edit `.env`, then run `./deploy.sh` again:
    ```bash
-   ssh root@91.99.50.186
+   ssh root@165.232.82.188
    nano /var/www/nisapoti/.env   # fill DB, JWT, SMTP, Snippe, SMS, NEXT_PUBLIC_BASE_URL
    exit
    ./deploy.sh
@@ -26,8 +26,8 @@
 ## Manual deploy (SSH)
 
 ```bash
-ssh root@91.99.50.186
-# password: Nisapoti@2026
+ssh root@165.232.82.188
+# password: NisapoTi@2026i
 
 cd /var/www/nisapoti
 
@@ -66,12 +66,12 @@ App runs on **port 3000** (`http://0.0.0.0:3000`). Put Nginx (or another reverse
 If **nisapoti.com** does not load or SSL is missing, run this **on the server** once:
 
 ```bash
-ssh root@91.99.50.186
+ssh root@165.232.82.188
 cd /var/www/nisapoti
 sudo bash scripts/setup-nginx-ssl.sh
 ```
 
-That script installs Nginx, configures it to proxy to port 3000, and obtains a Let's Encrypt certificate for `nisapoti.com`. Ensure DNS for `nisapoti.com` points to `91.99.50.186` before running.
+That script installs Nginx, configures it to proxy to port 3000, and obtains a Let's Encrypt certificate for `nisapoti.com`. Ensure DNS for `nisapoti.com` points to `165.232.82.188` before running.
 
 **Check from your machine:**
 
