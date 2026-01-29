@@ -1,39 +1,29 @@
-# Nisapoti — copy to .env and fill in values
-# Database
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=
+JWT_SECRET=a952121483963ccc0a3f8a160ad9e100f1ab37486f4f515e5eb92620a8b11fde7316d985fc50c195f40b43edd68c426217e0540d2963c3f0ba1d131cd16ab7b2
+
+# Database Configuration
+DB_HOST=192.250.229.162
+DB_USER=nisapoti_nis
+DB_PASSWORD=Alvin@2025
 DB_NAME=nisapoti_nis
 
-# JWT
-JWT_SECRET=
+PAWAPAY_API_KEY=eyJraWQiOiIxIiwiYWxnIjoiRVMyNTYifQ.eyJ0dCI6IkFBVCIsInN1YiI6IjE0NDEiLCJtYXYiOiIxIiwiZXhwIjoyMDczMTI5MjI0LCJpYXQiOjE3NTc1OTY0MjQsInBtIjoiREFGLFBBRiIsImp0aSI6IjRhOTA5NGI4LTZmNmQtNDJjZi1hNTY3LTljYWFlNDQ4M2E5YiJ9.BAmXw8MVErFphH5LLKSpIECJ6z8djMINz19ElUN4JKawavHjobnSYSRqEj06-0mT9oUmVK_J31buka85g2U0xA
+PAWAPAY_BASE_URL=https://api.pawapay.io
+PAWAPAY_WEBHOOK_URL=https://nisapoti.com/api/payments/webhook
 
-# App URL (used in emails, links, Snippe webhook)
-NEXT_PUBLIC_BASE_URL=https://your-domain.com
-
-# SMTP / Mail (creator notifications, purchase emails)
 SMTP_HOST=mail.nisapoti.com
 SMTP_PORT=465
-SMTP_SECURE=true
 SMTP_USER=no-reply@nisapoti.com
-SMTP_PASS=
+SMTP_PASS=Alvin@2025
 SMTP_FROM=no-reply@nisapoti.com
-MAIL_HOST=mail.nisapoti.com
-MAIL_PORT=465
-MAIL_USERNAME=no-reply@nisapoti.com
-MAIL_PASSWORD=
-MAIL_FROM_NAME=Nisapoti
-MAIL_FROM_ADDRESS=no-reply@nisapoti.com
 
-# Snippe (payments, withdrawals)
-SNIPPE_API_KEY=
+# Snippe Payment Configuration
+SNIPPE_API_KEY=snp_a08a932e89ad34a1c73a20bca8f8bbf4d9e6a25739ea797b2cf0c4439d008743
 SNIPPE_BASE_URL=https://api.snippe.sh
-SNIPPE_WEBHOOK_URL=https://your-domain.com/api/payments/snippe-webhook
+SNIPPE_WEBHOOK_URL=https://nisapoti.com/api/payments/snippe-webhook
 
-# SMS (Mambo — withdrawal notifications)
+# SMS Configuration (Mambo SMS)
 SMS_BASE_URL=https://mambosms.co.tz
-SMS_API_KEY=
+SMS_API_KEY=your_sms_api_key_here
 SMS_SENDER_ID=Nisapoti
-SMS_PHONE_NUMBER=
-SMS_PASSWORD=
+SMS_PHONE_NUMBER=0622551047
+SMS_PASSWORD=123456789

@@ -108,6 +108,8 @@ export async function GET(request: NextRequest) {
     `;
 
     // Fetch recent wishlist contributions (increased limit to get more historical data)
+    // Use s.created_at in dateFilter to avoid ambiguity with wishlist.created_at
+    const wishlistDateFilter = dateFilter ? dateFilter.replace(/\bcreated_at\b/g, 's.created_at') : '';
     const wishlistQuery = `
       SELECT 
         'wishlist' as type,
@@ -122,7 +124,7 @@ export async function GET(request: NextRequest) {
         w.id as wishlist_id
       FROM supporters s
       LEFT JOIN wishlist w ON s.wishlist_id = w.id
-      WHERE s.creator_id = ? AND s.status = 'completed' AND s.type = 'wishlist' ${dateFilter}
+      WHERE s.creator_id = ? AND s.status = 'completed' AND s.type = 'wishlist' ${wishlistDateFilter}
       ORDER BY s.created_at DESC
       LIMIT ?
     `;
