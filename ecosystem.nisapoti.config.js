@@ -1,24 +1,33 @@
 /**
- * PM2 config for Nisapoti Next.js app (production).
- * Usage: pm2 start ecosystem.nisapoti.config.js
+ * PM2 config for Nisapoti Next.js app (optimized for 4GB VPS)
  */
 module.exports = {
   apps: [
     {
       name: 'nisapoti',
-      script: './node_modules/.bin/next',
-      args: 'start -H 0.0.0.0 -p 3000',
+      script: 'npm',
+      args: 'start',
       cwd: __dirname,
-      instances: 1,
-      autorestart: true,
+
+      // ✅ VERY IMPORTANT SETTINGS
+      instances: 1,              // never use cluster for Next.js on small VPS
+      exec_mode: 'fork',
       watch: false,
-      max_memory_restart: '1G',
-      env: { NODE_ENV: 'production' },
+      autorestart: true,
+
+      // ✅ Memory protection
+      max_memory_restart: '400M',
+
+      env: {
+        NODE_ENV: 'production',
+        NODE_OPTIONS: '--max-old-space-size=512'
+      },
+
+      // Logs
       error_file: './logs/nisapoti-error.log',
       out_file: './logs/nisapoti-out.log',
-      log_file: './logs/nisapoti.log',
-      time: true,
       merge_logs: true,
+      time: true,
     },
   ],
 };
